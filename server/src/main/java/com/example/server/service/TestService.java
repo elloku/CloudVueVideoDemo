@@ -1,6 +1,7 @@
 package com.example.server.service;
 
 import com.example.server.domain.Test;
+import com.example.server.domain.TestExample;
 import com.example.server.mapper.TestMapper;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,9 @@ public class TestService {
     private TestMapper testMapper;
 
     public List<Test> GetList() {
-        return testMapper.GetList();
+        TestExample testExample = new TestExample();
+        testExample.setOrderByClause("id desc");
+        testExample.createCriteria().andIdEqualTo("1");
+        return testMapper.selectByExample(testExample);
     }
 }
