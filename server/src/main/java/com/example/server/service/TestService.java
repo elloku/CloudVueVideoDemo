@@ -19,7 +19,7 @@ public class TestService {
     @Resource
     private TestMapper testMapper;
 
-    public List<Test> GetList(){
+    public List<Test> GetList() {
         return testMapper.GetList();
     }
 }
