@@ -8,9 +8,9 @@
               <h1>
                 <i class="ace-icon fa fa-leaf green"></i>
                 <span class="red">Ace</span>
-                <span class="white" id="id-text2">Application</span>
+                <span class="white" id="id-text2">后台管理系统</span>
               </h1>
-              <h4 class="blue" id="id-company-text">&copy; Company Name</h4>
+              <h4 class="blue" id="id-company-text">@ vivacious</h4>
             </div>
 
             <div class="space-6"></div>
@@ -21,7 +21,7 @@
                   <div class="widget-main">
                     <h4 class="header blue lighter bigger">
                       <i class="ace-icon fa fa-coffee green"></i>
-                      Please Enter Your Information
+                      请输入你的用户名和密码
                     </h4>
 
                     <div class="space-6"></div>
@@ -85,13 +85,13 @@
                     <div>
                       <a href="#" data-target="#forgot-box" class="forgot-password-link">
                         <i class="ace-icon fa fa-arrow-left"></i>
-                        I forgot my password
+                        忘记密码
                       </a>
                     </div>
 
                     <div>
                       <a href="#" data-target="#signup-box" class="user-signup-link">
-                        I want to register
+                        前往注册
                         <i class="ace-icon fa fa-arrow-right"></i>
                       </a>
                     </div>
@@ -239,7 +239,7 @@
 </template>
 
 <script>
-  $('body').attr('class', 'login-layout blur-login');
+  $('body').attr('class', 'login-layout');
 
 export default {
   name: 'App',
