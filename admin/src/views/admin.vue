@@ -977,6 +977,18 @@
 
 
 <script>
-    $('body').removeClass('login-layout');
-    $('body').attr('class', 'no-skin');
+
+    export default {
+        name: 'login',
+        mounted:function(){
+            $('body').removeClass('login-layout');
+            $('body').attr('class', 'no-skin');
+
+        },
+        methods:{
+            login(){
+                this.$router.push("/admin")
+            }
+        }
+    }
 </script>

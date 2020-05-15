@@ -242,14 +242,18 @@
 </template>
 
 <script>
-    /*暗色主题*/
-    $('body').attr('class', 'login-layout');
+
     /*浅色主题*/
     /*$('body').attr('class', 'login-layout light-login');*/
     /*蓝色主题*/
     /*$('body').attr('class', 'login-layout blur-login');*/
     export default {
-        name: 'login',
+        name: 'admin',
+        mounted:function(){
+            $('body').removeClass('no-skin');
+            $('body').attr('class', 'login-layout');
+
+        },
         methods:{
             login(){
                 this.$router.push("/admin")
