@@ -36,6 +36,9 @@
                              targetPackage="com.example.server.mapper"
                              type="XMLMAPPER" />
 
+<!--
         <table tableName="test" domainObjectName="Test"/>
+-->
+        <table tableName="chapter" domainObjectName="chapter"/>
     </context>
 </generatorConfiguration>
