@@ -23,6 +23,7 @@ public class ChapterService {
     @Resource
     private ChapterMapper chapterMapper;
 
+
     public List<ChapterDto> GetList() {
         ChapterExample chapterExample = new ChapterExample();
         List<Chapter> chapters = chapterMapper.selectByExample(chapterExample);
