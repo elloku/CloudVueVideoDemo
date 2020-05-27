@@ -1,4 +1,4 @@
-package com.example.bussiness.config;
+package com.example.business.config;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
