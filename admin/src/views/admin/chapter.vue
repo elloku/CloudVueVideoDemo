@@ -88,9 +88,12 @@
         methods:{
             Getlist() {
                 let _this = this;
-                _this.$ajax.get('http://127.0.0.1:9000/business/admin/chapter/getlist').then((response)=>{
+                _this.$ajax.post('http://127.0.0.1:9000/business/admin/chapter/getlist', {
+                    page: 2,
+                    size: 4
+                }).then((response)=>{
                     console.log("查询大章列表结果：", response);
-                    _this.chapters = response.data;
+                    _this.chapters = response.data.list;
                 })
 
             }

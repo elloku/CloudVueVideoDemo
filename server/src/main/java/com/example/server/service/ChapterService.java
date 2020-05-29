@@ -3,8 +3,10 @@ package com.example.server.service;
 import com.example.server.domain.ChapterExample;
 import com.example.server.domain.Chapter;
 import com.example.server.dto.ChapterDto;
+import com.example.server.dto.PageDto;
 import com.example.server.mapper.ChapterMapper;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -25,18 +27,21 @@ public class ChapterService {
     private ChapterMapper chapterMapper;
 
 
-    public List<ChapterDto> GetList() {
-        PageHelper.startPage(1, 10);
+    public PageDto GetList(PageDto pageDto) {
+        PageHelper.startPage(pageDto.getPage(), pageDto.getSize());
         ChapterExample chapterExample = new ChapterExample();
         List<Chapter> chapters = chapterMapper.selectByExample(chapterExample);
+        PageInfo<Chapter> pageInfo = new PageInfo<>(chapters);
+        pageDto.setTotal(pageInfo.getTotal());
         List<ChapterDto> chapterDtos = new ArrayList<>();
-        for (int i = 0,size = chapters.size(); i < size; i++) {
+        for (int i = 0, size = chapters.size(); i < size; i++) {
             Chapter chapter = chapters.get(i);
             ChapterDto chapterDto = new ChapterDto();
-            BeanUtils.copyProperties(chapter,chapterDto);
+            BeanUtils.copyProperties(chapter, chapterDto);
             chapterDtos.add(chapterDto);
         }
-        return chapterDtos;
+        pageDto.setList(chapterDtos);
+        return pageDto;
     }
 
 
