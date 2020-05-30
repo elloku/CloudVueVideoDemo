@@ -3,6 +3,7 @@ package com.example.business.controller.admin;
 import com.example.server.domain.Chapter;
 import com.example.server.dto.ChapterDto;
 import com.example.server.dto.PageDto;
+import com.example.server.dto.ResponseDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.example.server.service.ChapterService;
@@ -29,17 +30,21 @@ public class ChapterController {
     private ChapterService chapterService;
 
     @RequestMapping("/getlist")
-    public PageDto list(@RequestBody PageDto pageDto) {
+    public ResponseDto list(@RequestBody PageDto pageDto) {
         LOG.info("pageDto: {}", pageDto);
+        ResponseDto responseDto = new ResponseDto();
         PageDto page = chapterService.GetList(pageDto);
-        return page;
+        responseDto.setContent(page);
+        return responseDto;
     }
 
     @RequestMapping("/save")
-    public ChapterDto save(@RequestBody ChapterDto chapterDto) {
+    public ResponseDto save(@RequestBody ChapterDto chapterDto) {
         LOG.info("chapterDto: {}", chapterDto);
+        ResponseDto responseDto = new ResponseDto();
         chapterService.save(chapterDto);
-        return chapterDto;
+        responseDto.setContent(chapterDto);
+        return responseDto;
     }
 
 
