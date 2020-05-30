@@ -50,6 +50,7 @@ public class ChapterService {
 
     /**
      * 保存方法中判断是否存在id字段，如果存在则为修改，不存在则是新增，调用不同的方法进行处理
+     *
      * @param chapterDto
      */
     public void save(ChapterDto chapterDto) {
@@ -68,6 +69,10 @@ public class ChapterService {
 
     private void update(Chapter chapter) {
         chapterMapper.updateByPrimaryKey(chapter);
+    }
+
+    public void delete(String id) {
+        chapterMapper.deleteByPrimaryKey(id);
     }
 
 

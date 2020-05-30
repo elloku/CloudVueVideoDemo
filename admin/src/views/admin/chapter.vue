@@ -36,7 +36,7 @@
                             <i class="ace-icon fa fa-pencil bigger-120"></i>
                         </button>
 
-                        <button class="btn btn-xs btn-danger">
+                        <button v-on:click="del(chapter.id)" class="btn btn-xs btn-danger">
                             <i class="ace-icon fa fa-trash-o bigger-120"></i>
                         </button>
                     </div>
@@ -107,9 +107,19 @@
                 _this.chapter = $.extend({}, chapter);
                 $("#form-modal").modal("show");
             },
+            del(id) {
+                let _this = this;
+                _this.$ajax.delete('http://127.0.0.1:9000/business/admin/chapter/delete/' + id).then((response) => {
+                    console.log("删除大章列表结果：", response);
+                    let resp = response.data;
+                    if (resp.success) {
+                        _this.getlist(1);
+                    }
+                })
+            },
             getlist(page) {
                 let _this = this;
-                _this.$ajax.post('http://127.0.0.1:9000/business/admin/chapter/getlist', {
+                _this.$ajax.post('http://127.0.0.1:9000/business/admin/chapter/list', {
                     page: page,
                     size: _this.$refs.pagination.size,
                 }).then((response) => {
@@ -119,7 +129,8 @@
                     _this.$refs.pagination.render(page, resp.content.total);
                 })
 
-            },
+            }
+            ,
             save(page) {
                 let _this = this;
                 _this.$ajax.post('http://127.0.0.1:9000/business/admin/chapter/save', _this.chapter).then((response) => {
