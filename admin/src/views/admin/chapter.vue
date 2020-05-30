@@ -1,11 +1,15 @@
 <template>
     <div>
         <p>
-            <button v-on:click="Getlist()" class="btn btn-white btn-default btn-round">
+            <button v-on:click="getlist()" class="btn btn-white btn-default btn-round">
                 <i class="ace-icon fa fa-refresh"></i>
                 刷新
             </button>
         </p>
+
+        <!--引入分页组件-->
+        <pagination ref="pagination" v-bind:list="getlist" v-bind:itemCount="5"></pagination>
+
         <table id="simple-table" class="table  table-bordered table-hover">
             <thead>
             <tr>
@@ -82,7 +86,9 @@
 </template>
 
 <script>
+    import Pagination from "../../components/pagination";
     export default {
+        components: {Pagination},
         name: 'chapter',
         data: function() {
             return {
@@ -91,18 +97,20 @@
         },
         mounted:function(){
             let _this = this;
-            _this.Getlist();
+            _this.$refs.pagination.size = 5;
+            _this.getlist(1);
 
         },
         methods:{
-            Getlist() {
+            getlist(page) {
                 let _this = this;
                 _this.$ajax.post('http://127.0.0.1:9000/business/admin/chapter/getlist', {
-                    page: 2,
-                    size: 4
+                    page: page,
+                    size: _this.$refs.pagination.size,
                 }).then((response)=>{
                     console.log("查询大章列表结果：", response);
                     _this.chapters = response.data.list;
+                    _this.$refs.pagination.render(page, response.data.total);
                 })
 
             }
