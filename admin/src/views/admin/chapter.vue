@@ -6,14 +6,14 @@
                 新增
             </button>
             &nbsp;&nbsp;
-            <button v-on:click="getlist()" class="btn btn-white btn-default btn-round">
+            <button v-on:click="list()" class="btn btn-white btn-default btn-round">
                 <i class="ace-icon fa fa-refresh"></i>
                 刷新
             </button>
         </p>
 
         <!--引入分页组件-->
-        <pagination ref="pagination" v-bind:list="getlist" v-bind:itemCount="5"></pagination>
+        <pagination ref="pagination" v-bind:list="list" v-bind:itemCount="5"></pagination>
 
         <table id="simple-table" class="table  table-bordered table-hover">
             <thead>
@@ -93,7 +93,7 @@
         mounted: function () {
             let _this = this;
             _this.$refs.pagination.size = 5;
-            _this.getlist(1);
+            _this.list(1);
 
         },
         methods: {
@@ -109,15 +109,32 @@
             },
             del(id) {
                 let _this = this;
-                _this.$ajax.delete('http://127.0.0.1:9000/business/admin/chapter/delete/' + id).then((response) => {
-                    console.log("删除大章列表结果：", response);
-                    let resp = response.data;
-                    if (resp.success) {
-                        _this.getlist(1);
+                Swal.fire({
+                    title: '确认删除？',
+                    text: "删除后不可恢复，确认删除？",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '确认!'
+                }).then((result) => {
+                    if (result.value) {
+                        _this.$ajax.delete('http://127.0.0.1:9000/business/admin/chapter/delete/' + id).then((response) => {
+                            console.log("删除大章列表结果：", response);
+                            let resp = response.data;
+                            if (resp.success) {
+                                _this.list(1);
+                                Swal.fire(
+                                    '删除成功!',
+                                    '删除成功！',
+                                    'success'
+                                )
+                            }
+                        })
                     }
                 })
             },
-            getlist(page) {
+            list(page) {
                 let _this = this;
                 _this.$ajax.post('http://127.0.0.1:9000/business/admin/chapter/list', {
                     page: page,
@@ -129,8 +146,7 @@
                     _this.$refs.pagination.render(page, resp.content.total);
                 })
 
-            }
-            ,
+            },
             save(page) {
                 let _this = this;
                 _this.$ajax.post('http://127.0.0.1:9000/business/admin/chapter/save', _this.chapter).then((response) => {
@@ -138,10 +154,10 @@
                     let resp = response.data;
                     if (resp.success) {
                         $("#form-modal").modal("hide");
-                        _this.getlist(1);
+                        _this.list(1);
                     }
                 })
             }
-        }
+        },
     }
 </script>
