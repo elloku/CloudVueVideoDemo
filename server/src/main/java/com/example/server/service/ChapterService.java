@@ -5,6 +5,7 @@ import com.example.server.domain.Chapter;
 import com.example.server.dto.ChapterDto;
 import com.example.server.dto.PageDto;
 import com.example.server.mapper.ChapterMapper;
+import com.example.server.util.CopyUtil;
 import com.example.server.util.UuidUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -34,21 +35,23 @@ public class ChapterService {
         List<Chapter> chapters = chapterMapper.selectByExample(chapterExample);
         PageInfo<Chapter> pageInfo = new PageInfo<>(chapters);
         pageDto.setTotal(pageInfo.getTotal());
-        List<ChapterDto> chapterDtos = new ArrayList<>();
+        /*List<ChapterDto> chapterDtos = new ArrayList<>();
         for (int i = 0, size = chapters.size(); i < size; i++) {
             Chapter chapter = chapters.get(i);
             ChapterDto chapterDto = new ChapterDto();
             BeanUtils.copyProperties(chapter, chapterDto);
             chapterDtos.add(chapterDto);
-        }
+        }*/
+        List<ChapterDto> chapterDtos = CopyUtil.copyList(chapters, ChapterDto.class);
         pageDto.setList(chapterDtos);
         return pageDto;
     }
 
     public void save(ChapterDto chapterDto) {
         chapterDto.setId(UuidUtil.getShortUuid());
-        Chapter chapter = new Chapter();
-        BeanUtils.copyProperties(chapterDto, chapter);
+        /*Chapter chapter = new Chapter();
+        BeanUtils.copyProperties(chapterDto, chapter);*/
+        Chapter chapter = CopyUtil.copy(chapterDto, Chapter.class);
         chapterMapper.insert(chapter);
     }
 
