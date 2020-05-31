@@ -7,6 +7,7 @@ import com.example.server.dto.PageDto;
 import com.example.server.mapper.ChapterMapper;
 import com.example.server.util.CopyUtil;
 import com.example.server.util.UuidUtil;
+import com.example.server.util.ValidatorUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
@@ -54,6 +55,12 @@ public class ChapterService {
      * @param chapterDto
      */
     public void save(ChapterDto chapterDto) {
+
+        // 保存校验
+        ValidatorUtil.require(chapterDto.getName(), "名称");
+        ValidatorUtil.require(chapterDto.getCourseId(), "课程ID");
+        ValidatorUtil.length(chapterDto.getCourseId(), "课程ID", 1, 8);
+
         Chapter chapter = CopyUtil.copy(chapterDto, Chapter.class);
         if (StringUtils.isEmpty(chapterDto.getId())) {
             this.insert(chapter);
